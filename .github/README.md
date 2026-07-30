@@ -119,3 +119,36 @@ pnpm check
 pnpm build
 pnpm pack --pack-destination /tmp
 ```
+
+## Releasing
+
+Releases are managed by [release-it](https://github.com/release-it/release-it). Start with the
+release gate:
+
+```bash
+pnpm release:check
+```
+
+Preview a specific release without changing the repository or publishing:
+
+```bash
+pnpm release:dry patch
+```
+
+Then select a version interactively:
+
+```bash
+pnpm release
+```
+
+You can also select the increment explicitly:
+
+```bash
+pnpm release patch
+pnpm release minor
+pnpm release major
+```
+
+The release workflow requires a clean `main` branch with commits since the latest tag. It updates
+`package.json`, creates a `chore(release): v<version>` commit and `v<version>` Git tag, pushes them
+to GitHub, and publishes the package to npm.
