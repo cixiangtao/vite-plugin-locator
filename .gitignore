@@ -1,0 +1,33 @@
+# Dependencies and package-manager stores
+node_modules/
+.pnpm-store/
+
+# Build, test, and tool output
+dist/
+coverage/
+.nyc_output/
+.vite/
+*.tsbuildinfo
+*.tgz
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Operating-system files
+.DS_Store
+Thumbs.db
