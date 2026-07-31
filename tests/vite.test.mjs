@@ -42,7 +42,7 @@ async function createReactFixture() {
   return root;
 }
 
-void test("runs before the Vite 8 React transform in a real dev server", async () => {
+void test("runs before the React transform in a real Vite dev server", async () => {
   const root = await createReactFixture();
   const server = await createServer({
     root,

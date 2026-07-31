@@ -6,9 +6,17 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v6
@@ -16,7 +24,70 @@ jobs:
           version: 10.17.1
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
+      - run: pnpm check:package
+
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.17.1
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:browser
+
+  compatibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - node: 18
+            vite: 5
+            reactPlugin: 4
+            react: 18
+          - node: 18
+            vite: 6
+            reactPlugin: 4
+            react: 18
+          - node: 20
+            vite: 7
+            reactPlugin: 5
+            react: 19
+          - node: 22
+            vite: 8
+            reactPlugin: 6
+            react: 19
+    name: Vite ${{ matrix.vite }} / Node ${{ matrix.node }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.17.1
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: >-
+          pnpm add --save-dev --lockfile=false
+          "vite@${{ matrix.vite }}"
+          "@vitejs/plugin-react@${{ matrix.reactPlugin }}"
+          "react@${{ matrix.react }}"
+          "react-dom@${{ matrix.react }}"
+      - run: pnpm build
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+      - run: node --test tests/*.test.mjs

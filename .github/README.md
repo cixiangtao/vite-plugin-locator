@@ -98,7 +98,8 @@ v6 uses Oxc and requires custom Babel transforms to be connected through
 `vite-plugin-locator` does not modify framework plugin configuration. It uses the Vite `transform`
 hook shared by Vite 5–8 and instruments matching source files before React, Oxc, or another
 framework transform runs. The integration API therefore remains the same across supported Vite
-versions.
+versions. CI exercises the latest release in each supported Vite major against its compatible Node
+runtime.
 
 ## Advanced manual integration
 
@@ -113,9 +114,13 @@ Most Vite applications should use the default `locator()` integration.
 
 ## Development
 
+The published package supports Node 18 and newer. Repository build and release tooling uses Node 24.
+
 ```bash
 pnpm install
 pnpm check
+pnpm exec playwright install chromium
+pnpm test:browser
 pnpm build
 pnpm pack --pack-destination /tmp
 ```
@@ -152,3 +157,19 @@ pnpm release major
 The release workflow requires a clean `main` branch with commits since the latest tag. It updates
 `package.json`, creates a `chore(release): v<version>` commit and `v<version>` Git tag, pushes them
 to GitHub, and publishes the package to npm.
+
+After publishing, verify that npm and the remote Git tag resolve to the same commit:
+
+```bash
+pnpm release:verify
+```
+
+## Security
+
+Report suspected vulnerabilities through
+[GitHub private vulnerability reporting](https://github.com/cixiangtao/vite-plugin-locator/security/advisories/new),
+not a public issue. See the [security policy](../SECURITY.md) for details.
+
+## License
+
+[MIT](../LICENSE)
