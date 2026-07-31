@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/cixiangtao/vite-plugin-locator/issues"
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "author": "cixiangtao",
   "repository": {
     "type": "git",
