@@ -127,38 +127,18 @@ pnpm pack --pack-destination /tmp
 
 ## Releasing
 
-Releases are managed by [release-it](https://github.com/release-it/release-it). Start with the
-release gate:
+Release Please automatically maintains the release pull request from changes merged into `main`.
+Run the local release gate when validating a candidate:
 
 ```bash
 pnpm release:check
 ```
 
-Preview a specific release without changing the repository or publishing:
-
-```bash
-pnpm release:dry patch
-```
-
-Then select a version interactively:
-
-```bash
-pnpm release
-```
-
-You can also select the increment explicitly:
-
-```bash
-pnpm release patch
-pnpm release minor
-pnpm release major
-```
-
-Create an exact `release/v<version>` branch from the protected `main` head before running
-release-it. It updates `package.json` and `pnpm-lock.yaml`, then creates the release commit locally.
-Push that branch and open a pull request into `main`. After the checked release PR merges, GitHub
-Actions creates the tag at the merge commit and publishes the inspected package artifact to npm
-through trusted publishing. Local release commands never tag, push, or publish.
+Conventional commit or squash-merge titles determine the proposed version and Changelog. Review
+the automated release PR and its required checks, then merge it when ready. GitHub Actions verifies
+that exact merge, builds and packs once, creates the tag and GitHub Release, and publishes the
+inspected package artifact through npm trusted publishing. Local commands never bump versions,
+tag, push, or publish.
 
 See [RELEASING.md](../RELEASING.md) for the complete gate and recovery contract.
 
