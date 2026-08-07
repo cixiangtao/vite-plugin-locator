@@ -154,9 +154,13 @@ pnpm release minor
 pnpm release major
 ```
 
-The release workflow requires a clean `main` branch with commits since the latest tag. It updates
-`package.json`, creates a `chore(release): v<version>` commit and `v<version>` Git tag, pushes them
-to GitHub, and publishes the package to npm.
+Create an exact `release/v<version>` branch from the protected `main` head before running
+release-it. It updates `package.json` and `pnpm-lock.yaml`, then creates the release commit locally.
+Push that branch and open a pull request into `main`. After the checked release PR merges, GitHub
+Actions creates the tag at the merge commit and publishes the inspected package artifact to npm
+through trusted publishing. Local release commands never tag, push, or publish.
+
+See [RELEASING.md](../RELEASING.md) for the complete gate and recovery contract.
 
 After publishing, verify that npm and the remote Git tag resolve to the same commit:
 
