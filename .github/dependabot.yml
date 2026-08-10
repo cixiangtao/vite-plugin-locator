@@ -65,4 +65,3 @@ updates:
           - "*"
     commit-message:
       prefix: "ci(deps)"
-
