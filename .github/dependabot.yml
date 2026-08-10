@@ -45,6 +45,18 @@ updates:
       - dependency-name: "*"
         update-types:
           - "version-update:semver-major"
+      - dependency-name: "@locator/babel-jsx"
+        update-types:
+          - "version-update:semver-minor"
+      - dependency-name: "@locator/runtime"
+        update-types:
+          - "version-update:semver-minor"
+      - dependency-name: oxfmt
+        update-types:
+          - "version-update:semver-minor"
+      - dependency-name: tsdown
+        update-types:
+          - "version-update:semver-minor"
     commit-message:
       prefix: fix
       prefix-development: build
