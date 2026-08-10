@@ -1,5 +1,7 @@
 # vite-plugin-locator
 
+English | [简体中文](README.zh-CN.md)
+
 One-call [LocatorJS](https://www.locatorjs.com/) integration for Vite 5–8 projects.
 
 The plugin handles both source-location instrumentation and browser runtime injection. Applications
@@ -153,6 +155,8 @@ pnpm release:verify
 Report suspected vulnerabilities through
 [GitHub private vulnerability reporting](https://github.com/cixiangtao/vite-plugin-locator/security/advisories/new),
 not a public issue. See the [security policy](../SECURITY.md) for details.
+
+For development guidance and ordinary support, see [Contributing](../CONTRIBUTING.md) and [Support](../SUPPORT.md).
 
 ## License
 
