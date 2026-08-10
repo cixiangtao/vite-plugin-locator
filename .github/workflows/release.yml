@@ -108,6 +108,8 @@ jobs:
           node-version: 24
           package-manager-cache: false
       - run: pnpm install --frozen-lockfile
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
       - name: Validate and pack
         run: |
           pnpm release:check
@@ -162,7 +164,7 @@ jobs:
           if npm view "vite-plugin-locator@${VERSION}" version >/dev/null 2>&1; then
             echo "vite-plugin-locator@${VERSION} already exists; skipping npm publish."
           else
-            npm publish artifacts/*.tgz --access public --tag "$NPM_TAG" --provenance
+            npm publish ./artifacts/*.tgz --access public --tag "$NPM_TAG" --provenance
           fi
       - name: Create or repair GitHub Release
         env:
